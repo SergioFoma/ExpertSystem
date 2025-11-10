@@ -3,9 +3,9 @@
 
 #include <limits.h>
 
-typedef const char* treeElem_t;
+typedef char* treeElem_t;
 #define treeValueFormat "%s"
-#define maxTreeValue "It is unknown who"
+#define maxTreeValue strdup("It is unknown who")
 
 const size_t oneStruct = 1;
 

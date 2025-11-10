@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "tree.h"
 #include "treeDump.h"
@@ -6,51 +7,38 @@
 
 int main(){
 
-    /*tree_t tree = {};
-
-    initTree( &tree );
-
-    insertNode( &tree , 10 );
-    insertNode( &tree , 20 );
-    insertNode( &tree , 5 );
-    insertNode( &tree , 3 );
-    insertNode( &tree , 7 );
-    insertNode( &tree , 15 );
-
-    printTree( &tree );
-    printf( "\n" );
-
-    printf( "\nThe sorted tree:\n\n" );
-    printTheSortedTree( &tree );
-    printf( "\n" );*/
-
     tree_t tree = {};
     initTree( &tree );
 
     node_t* node_1 = {};
-    initNode( &node_1, "Animals" );
+    char* line_1 = strdup( "Animals" );
+    initNode( &node_1, line_1 );
 
     node_t* node_2 = {};
-    initNode( &node_2, "Poltarashka" );
+    char* line_2 = strdup( "Poltaraska" );
+    initNode( &node_2, line_2 );
 
     node_t* node_3 = {};
-    initNode( &node_3, "Matan teaches" );
+    char* line_3 = strdup( "Matan teaches" );
+    initNode( &node_3, line_3 );
 
     node_t* node_4 = {};
-    initNode( &node_4, "Baraban" );
+    char* line_4 = strdup( "Baraban" );
+    initNode( &node_4, line_4 );
 
     node_t* node_5 = {};
-    initNode( &node_5, "Nikita" );
+    char* line_5 = strdup( "Nikita" );
+    initNode( &node_5, line_5 );
 
-    ( tree.rootTree )->left = node_1;
+    ( tree.rootTree )->right = node_1;
     node_1->left = node_2;
     node_1->right = node_3;
     node_3->left = node_4;
     node_3->right = node_5;
 
-    dumpTree( &tree );
+    startExpertSystem( &tree );
 
-    guessElement( &tree );
+    dumpTree( &tree );
 
     destroyTree( &tree );
 

@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "tree.h"
 
@@ -53,7 +54,7 @@ treeErrors initNode( node_t** node, treeElem_t element ){
         return NOT_ENOUGH_MEMORY;
     }
 
-    (*node)->data = element;
+    (*node)->data = element ;
 
     (*node)->left = NULL;
     (*node)->right = NULL;
@@ -100,7 +101,7 @@ void destroyNode( node_t* node ){
 
     //printf( "\n\nnode = %p\nData = "  treeValueFormat "\nleft prt = %p\nright ptr = %p\n", node, node->data, node->left, node->right );
 
-    node->data = {};
+    free( node->data );
 
     if( node->left  ){
         destroyNode( node->left );

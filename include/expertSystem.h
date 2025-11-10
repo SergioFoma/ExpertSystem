@@ -3,8 +3,6 @@
 
 #include "tree.h"
 
-const size_t maxLenForAnswer = 10;
-
 enum expertSystemErrors {
     CORRECT_WORK            = 0,
     CAN_NOT_DO_ALLOCATION   = 1,
@@ -13,9 +11,17 @@ enum expertSystemErrors {
     ERROR_OF_CLEAN          = 4
 };
 
+expertSystemErrors startExpertSystem( tree_t* tree );
+
 expertSystemErrors guessElement( tree_t* tree );
 
-expertSystemErrors takeAnAnswer( char* answer );
+expertSystemErrors changeElement( node_t* node );
+
+expertSystemErrors takeAnAnswer( char** answer );
+
+expertSystemErrors takeNameOfObject( char** answer );
+
+void cleanBuffer();
 
 #endif
 
