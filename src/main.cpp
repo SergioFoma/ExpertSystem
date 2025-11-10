@@ -15,7 +15,7 @@ int main(){
     initNode( &node_1, line_1 );
 
     node_t* node_2 = {};
-    char* line_2 = strdup( "Poltaraska" );
+    char* line_2 = strdup( "Poltarashka" );
     initNode( &node_2, line_2 );
 
     node_t* node_3 = {};

@@ -11,6 +11,12 @@ enum expertSystemErrors {
     ERROR_OF_CLEAN          = 4
 };
 
+enum informationAboutFind {
+    FIND_PRINT_NO         = 0,
+    FIND_PRINT_YES        = 1,
+    NOT_FIND              = 3
+};
+
 expertSystemErrors startExpertSystem( tree_t* tree );
 
 expertSystemErrors guessElement( tree_t* tree );
@@ -20,6 +26,12 @@ expertSystemErrors changeElement( node_t* node );
 expertSystemErrors takeAnAnswer( char** answer );
 
 expertSystemErrors takeNameOfObject( char** answer );
+
+expertSystemErrors writeInformationInFile( tree_t* tree );
+
+expertSystemErrors giveDefinition( tree_t* tree );
+
+informationAboutFind printDefinition( node_t* node, char* answer );
 
 void cleanBuffer();
 

@@ -6,10 +6,6 @@
 
 static int firstRank = 1;
 
-static void dumpNodeInFile( const node_t* node, FILE* fileForWrite );
-
-static void dumpTreeInFile( const tree_t* tree, FILE* fileForWrite );
-
 static void dumpTheSortedNodeInFile( const node_t* node, FILE* fileForWrite );
 
 static void dumpTheSortedTreeInFile( const tree_t* tree, FILE* fileForWrite );
@@ -109,7 +105,7 @@ treeErrors dumpTree( tree_t* tree ){
     return CORRECT_TREE;
 }
 
-static void dumpNodeInFile( const node_t* node, FILE* fileForPrint ){
+void dumpNodeInFile( const node_t* node, FILE* fileForPrint ){
     assert( node );
     assert( fileForPrint );
 
@@ -125,7 +121,7 @@ static void dumpNodeInFile( const node_t* node, FILE* fileForPrint ){
     fprintf( fileForPrint, ")" );
 }
 
-static void dumpTreeInFile( const tree_t* tree, FILE* fileForPrint ){
+void dumpTreeInFile( const tree_t* tree, FILE* fileForPrint ){
     assert( tree );
     assert( fileForPrint );
 

@@ -6,6 +6,7 @@
 #include "expertSystem.h"
 #include "myStringFunction.h"
 #include "paint.h"
+#include "treeDump.h"
 
 size_t maxLenForAnswer = 40;
 
@@ -13,24 +14,39 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
     colorPrintf( NOMODE, YELLOW, "Expert system loading...\nI'm a expert system - choose an object and i'm guess it\n\n" );
     colorPrintf( NOMODE, BLUE, "What do you want?\n"
                                "[g] - guesses\n"
+                               "[w] - write in file\n"
+                               "[d] - give a definition\n"
                                "[s] - stop\n"
                                "Your choice: " );
     char userChoice = '\0';
 
-    scanf( "%c", &userChoice );
+    scanf( "%1c", &userChoice );
     cleanBuffer();
+    expertSystemErrors statusOfSystem = CORRECT_WORK;
 
     while( userChoice != 's' ){
         switch( userChoice ){
             case 'g':
                 guessElement( tree );
                 break;
+            case 'w':
+                statusOfSystem = writeInformationInFile( tree );
+                if( statusOfSystem == CORRECT_WORK ){
+                    colorPrintf( NOMODE, GREEN, "Information about database write in file!\n" );
+                }
+                break;
+            case 'd':
+                giveDefinition( tree );
+                break;
             default:
                 colorPrintf( NOMODE, RED, "You have entered an unknown command, try again.\n" );
                 break;
         }
+        printf( "\n\n" );
         colorPrintf( NOMODE, BLUE, "What do you want?\n"
                                "[g] - guesses\n"
+                               "[w] - write in file\n"
+                               "[d] - give a definition\n"
                                "[s] - stop\n"
                                "Your choice: " );
         scanf( "%c", &userChoice );
@@ -58,12 +74,9 @@ expertSystemErrors guessElement( tree_t* tree ){
 
         colorPrintf( NOMODE, BLUE, treeValueFormat "?\n", (*nodePtr)->data );
         systemErr = takeAnAnswer( &answer );
-        colorPrintf( NOMODE, PURPLE, " answer = %s, LINE = %d\n", answer, __LINE__ );
         while( systemErr != CORRECT_WORK ){
             cleanLine( answer );
-            colorPrintf( NOMODE, PURPLE, "answer after clean = %s, LINE = %d\n", answer, __LINE__ );
             systemErr = takeAnAnswer( &answer );
-            colorPrintf( NOMODE, PURPLE, " answer = %s, LINE = %d\n", answer, __LINE__ );
         }
 
         previousNodePtr = &(*nodePtr);
@@ -118,7 +131,6 @@ expertSystemErrors takeAnAnswer( char** answer ){
     char* lineForRecording = NULL;
     size_t sizeOfAllocationMemory = 0;
     ssize_t sizeOfLine = myGetline( &lineForRecording, &sizeOfAllocationMemory, stdin );
-    colorPrintf( NOMODE, PURPLE, "line for recording = %s, LINE = %d\n", lineForRecording, __LINE__ );
 
     if( sizeOfLine == -1 ){
         return ERROR_WITH_GETLINE;
@@ -171,7 +183,7 @@ expertSystemErrors takeNameOfObject( char** answer ){
     char* lineForRecording = NULL;
     size_t sizeOfAllocationMemory = 0;
     ssize_t sizeOfLine = myGetline( &lineForRecording, &sizeOfAllocationMemory, stdin );
-    colorPrintf( NOMODE, PURPLE, "line for recording = %s, LINE = %d\n", lineForRecording, __LINE__ );
+    //colorPrintf( NOMODE, PURPLE, "line for recording = %s, LINE = %d\n", lineForRecording, __LINE__ );
 
     size_t lineIndex = 0;
 
@@ -194,4 +206,63 @@ expertSystemErrors takeNameOfObject( char** answer ){
 void cleanBuffer(){
     int symbol = '\0';
     while( ( symbol = getchar() ) != '\n' );
+}
+
+expertSystemErrors writeInformationInFile( tree_t* tree ){
+    assert( tree );
+    FILE* fileForTree = fopen( "treeInformation.txt", "w" );
+
+    dumpTreeInFile( tree, fileForTree );
+
+    return CORRECT_WORK;
+}
+
+expertSystemErrors giveDefinition( tree_t* tree ){
+    assert( tree );
+
+    colorPrintf( NOMODE, YELLOW, "Enter the name of object: " );
+    char* nameOfObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
+    takeNameOfObject( &nameOfObject );
+
+    informationAboutFind statusOfFind = printDefinition( tree->rootTree, nameOfObject );
+
+    if( statusOfFind == NOT_FIND ){
+        colorPrintf( NOMODE, RED, "You enter the name of unknown object. Try again\n" );
+    }
+
+    free( nameOfObject );
+    return CORRECT_WORK;
+}
+
+informationAboutFind printDefinition( node_t* node, char* answer ){
+    if( node == NULL ){
+        return NOT_FIND;
+    }
+
+    if( node->left && strcmp( answer, (node->left)->data ) == 0 ){
+        colorPrintf( NOMODE, PURPLE, "%s %s ", answer, node->data );
+        return FIND_PRINT_YES;
+    }
+    if( node->right && strcmp( answer, (node->right)->data ) == 0 ){
+        colorPrintf( NOMODE, PURPLE, "%s no %s ", answer, node->data );
+        return FIND_PRINT_NO;
+    }
+
+    informationAboutFind statusOfFinding = NOT_FIND;
+    if( node->left ){
+        statusOfFinding= printDefinition( node->left, answer );
+        if( statusOfFinding != NOT_FIND ){
+            colorPrintf( NOMODE, PURPLE, ",%s ", node->data );
+            return FIND_PRINT_YES;
+        }
+    }
+    if( node->right ){
+        statusOfFinding = printDefinition( node->right, answer );
+        if( statusOfFinding != NOT_FIND ){
+            colorPrintf( NOMODE, PURPLE, ",no %s ", node->data );
+            return FIND_PRINT_NO;
+        }
+    }
+
+    return NOT_FIND;
 }
