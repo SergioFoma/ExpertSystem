@@ -8,7 +8,10 @@ enum expertSystemErrors {
     CAN_NOT_DO_ALLOCATION   = 1,
     ERROR_WITH_GETLINE      = 2,
     NOT_CORRECT_WORK        = 3,
-    ERROR_OF_CLEAN          = 4
+    ERROR_OF_CLEAN          = 4,
+    TREE_NULL_PTR           = 5,
+    TREE_ERRORS             = 6,
+    NULL_PTR_IN_FUNC        = 7
 };
 
 enum informationAboutFind {
@@ -20,6 +23,10 @@ enum informationAboutFind {
 expertSystemErrors startExpertSystem( tree_t* tree );
 
 expertSystemErrors guessElement( tree_t* tree );
+
+expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, char** answer );
+
+expertSystemErrors makeNewObject( node_t** previousNodePtr, char** answer );
 
 expertSystemErrors changeElement( node_t* node );
 

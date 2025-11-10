@@ -4,6 +4,7 @@
 #include "tree.h"
 #include "treeDump.h"
 #include "expertSystem.h"
+#include "paint.h"
 
 int main(){
 
@@ -36,7 +37,11 @@ int main(){
     node_3->left = node_4;
     node_3->right = node_5;
 
-    startExpertSystem( &tree );
+    expertSystemErrors statusOfExpertSystem = startExpertSystem( &tree );
+    if( statusOfExpertSystem != CORRECT_WORK ){
+        colorPrintf( NOMODE, RED, "\n\nError of system\n\n" );
+        return 0;
+    }
 
     dumpTree( &tree );
 

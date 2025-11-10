@@ -37,23 +37,9 @@ digraph G{
 	}
 		node503000000160;
 	node503000000100->node503000000160[color = "orange"];
-	node503000000160 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000160 </td></tr> <tr><td> he works in huawei</td></tr> <tr><td> 0x5030000002b0 </td></tr><tr><td> 0x503000000310 </td></tr></table>>;color = "red"];
+	node503000000160 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000160 </td></tr> <tr><td> Nikita</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
 	{
 		rank = 4;
 		node503000000160;
-	}
-		node5030000002b0;
-	node503000000160->node5030000002b0[color = "orange"];
-	node5030000002b0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000002b0 </td></tr> <tr><td> Maks</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
-	{
-		rank = 5;
-		node5030000002b0;
-	}
-		node503000000310;
-	node503000000160->node503000000310[color = "orange"];
-	node503000000310 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000310 </td></tr> <tr><td> Nikita</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
-	{
-		rank = 5;
-		node503000000310;
 	}
 }
