@@ -17,7 +17,12 @@ enum expertSystemErrors {
 enum informationAboutFind {
     FIND_PRINT_NO         = 0,
     FIND_PRINT_YES        = 1,
-    NOT_FIND              = 3
+    NOT_FIND              = 3,
+    DETECTED              = 4,
+    FINISH_FIND           = 5,
+    ERROR_OF_FIND         = 6,
+    FIND_FIRST_OBJECT     = 7,
+    FIND_SECOND_OBJECT    = 8
 };
 
 expertSystemErrors startExpertSystem( tree_t* tree );
@@ -39,6 +44,10 @@ expertSystemErrors writeInformationInFile( tree_t* tree );
 expertSystemErrors giveDefinition( tree_t* tree );
 
 informationAboutFind printDefinition( node_t* node, char* answer );
+
+expertSystemErrors giveDifferences( tree_t* tree );
+
+informationAboutFind printDifferences( node_t* node, char* firstObject, char* secondObject );
 
 void cleanBuffer();
 

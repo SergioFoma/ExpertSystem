@@ -23,6 +23,7 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
                                 "[g] - guesses\n"
                                 "[w] - write in file\n"
                                 "[d] - give a definition\n"
+                                "[f] - give differences\n"
                                 "[s] - stop\n"
                                 "Your choice: " );
 
@@ -48,6 +49,12 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
                 break;
             case 'd':
                 statusOfSystem = giveDefinition( tree );
+                if( statusOfSystem != CORRECT_WORK ){
+                    return statusOfSystem;
+                }
+                break;
+            case 'f':
+                statusOfSystem = giveDifferences( tree );
                 if( statusOfSystem != CORRECT_WORK ){
                     return statusOfSystem;
                 }
@@ -291,11 +298,11 @@ informationAboutFind printDefinition( node_t* node, char* answer ){
     }
 
     if( node->left && strcmp( answer, (node->left)->data ) == 0 ){
-        colorPrintf( NOMODE, PURPLE, "%s %s ", answer, node->data );
+        colorPrintf( NOMODE, PURPLE, "%s: %s ", answer, node->data );
         return FIND_PRINT_YES;
     }
     if( node->right && strcmp( answer, (node->right)->data ) == 0 ){
-        colorPrintf( NOMODE, PURPLE, "%s no %s ", answer, node->data );
+        colorPrintf( NOMODE, PURPLE, "%s: no %s ", answer, node->data );
         return FIND_PRINT_NO;
     }
 
@@ -316,4 +323,80 @@ informationAboutFind printDefinition( node_t* node, char* answer ){
     }
 
     return NOT_FIND;
+}
+
+expertSystemErrors giveDifferences( tree_t* tree ){
+    if( tree == NULL ){
+        return TREE_NULL_PTR;
+    }
+
+    char* firstObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
+    char* secondObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
+
+    colorPrintf( NOMODE, YELLOW, "You have selected the option to compare two objects\nEnter the name of the first one: " );
+    expertSystemErrors statusOfProgramWork = takeNameOfObject( &firstObject );
+    if( statusOfProgramWork != CORRECT_WORK ){
+        return statusOfProgramWork;
+    }
+    colorPrintf( NOMODE, BLUE, "\n%s\n", firstObject );
+
+    colorPrintf( NOMODE, YELLOW, "\nEnter the name of second one: " );
+    statusOfProgramWork = takeNameOfObject( &secondObject );
+    if( statusOfProgramWork != CORRECT_WORK ){
+        return statusOfProgramWork;
+    }
+    colorPrintf( NOMODE, BLUE, "\n%s\n", secondObject );
+
+
+    printDifferences( tree->rootTree, firstObject, secondObject );
+
+    free( firstObject );
+    free( secondObject );
+
+    return CORRECT_WORK;
+}
+
+informationAboutFind printDifferences( node_t* node, char* firstObject, char* secondObject ){
+    if( node == NULL || firstObject == NULL || secondObject == NULL ){
+        return ERROR_OF_FIND;
+    }
+
+    if( strcmp( firstObject, node->data ) == 0 ){
+        return FIND_FIRST_OBJECT;
+    }
+    else if( strcmp( secondObject, node->data ) == 0 ){
+        return FIND_SECOND_OBJECT;
+    }
+
+    informationAboutFind statusOfDetectedFromLeft = FINISH_FIND;
+    informationAboutFind statusOfDetectedFromRight = FINISH_FIND;
+
+    if( node->left ){
+        statusOfDetectedFromLeft = printDifferences( node->left, firstObject, secondObject );
+    }
+    if( node->right ){
+        statusOfDetectedFromRight = printDifferences( node->right, firstObject, secondObject );
+    }
+
+    if( statusOfDetectedFromLeft == FIND_FIRST_OBJECT && statusOfDetectedFromRight == FIND_SECOND_OBJECT ){
+        printDefinition( node, firstObject );
+        colorPrintf( NOMODE, PURPLE, " ,but " );
+        printDefinition( node, secondObject );
+        return FINISH_FIND;
+    }
+    else if( statusOfDetectedFromLeft == FIND_SECOND_OBJECT && statusOfDetectedFromRight == FIND_FIRST_OBJECT ){
+        printDefinition( node, firstObject );
+        colorPrintf( NOMODE, PURPLE, " ,but " );
+        printDefinition( node, secondObject );
+        return FINISH_FIND;
+    }
+
+    if( statusOfDetectedFromLeft != FINISH_FIND ){
+        return statusOfDetectedFromLeft;
+    }
+    else if( statusOfDetectedFromRight != FINISH_FIND ){
+        return statusOfDetectedFromRight;
+    }
+
+    return FINISH_FIND;
 }
