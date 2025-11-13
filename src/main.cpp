@@ -9,7 +9,7 @@
 int main(){
 
     tree_t tree = {};
-    initTree( &tree );
+    /*initTree( &tree );
 
     node_t* node_1 = {};
     char* line_1 = strdup( "Animals" );
@@ -35,11 +35,12 @@ int main(){
     node_1->left = node_2;
     node_1->right = node_3;
     node_3->left = node_4;
-    node_3->right = node_5;
+    node_3->right = node_5;*/
 
     expertSystemErrors statusOfExpertSystem = startExpertSystem( &tree );
     if( statusOfExpertSystem != CORRECT_WORK ){
         colorPrintf( NOMODE, RED, "\n\nError of system\n\n" );
+        destroyTree( &tree );
         return 0;
     }
 

@@ -1,5 +1,5 @@
-#ifndef H_EXPERTSYSTEM
-#define H_EXPERTSYSTEM
+#ifndef H_EXPERT_SYSTEM
+#define H_EXPERT_SYSTEM
 
 #include "tree.h"
 
@@ -11,7 +11,8 @@ enum expertSystemErrors {
     ERROR_OF_CLEAN          = 4,
     TREE_NULL_PTR           = 5,
     TREE_ERRORS             = 6,
-    NULL_PTR_IN_FUNC        = 7
+    NULL_PTR_IN_FUNC        = 7,
+    ERROR_WITH_FILE         = 8
 };
 
 enum informationAboutFind {
@@ -33,13 +34,9 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
 
 expertSystemErrors makeNewObject( node_t** previousNodePtr, char** answer );
 
-expertSystemErrors changeElement( node_t* node );
-
 expertSystemErrors takeAnAnswer( char** answer );
 
 expertSystemErrors takeNameOfObject( char** answer );
-
-expertSystemErrors writeInformationInFile( tree_t* tree );
 
 expertSystemErrors giveDefinition( tree_t* tree );
 

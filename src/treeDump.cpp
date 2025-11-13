@@ -109,13 +109,19 @@ void dumpNodeInFile( const node_t* node, FILE* fileForPrint ){
     assert( node );
     assert( fileForPrint );
 
-    fprintf( fileForPrint, "(\"" treeValueFormat "\" ", node->data );
+    fprintf( fileForPrint, "(\"" treeValueFormat "\"", node->data );
 
     if( node->left ){
         dumpNodeInFile( node->left, fileForPrint);
     }
+    else{
+        fprintf( fileForPrint, "nil" );
+    }
     if( node->right ){
         dumpNodeInFile( node->right, fileForPrint );
+    }
+    else{
+        fprintf( fileForPrint, "nil" );
     }
 
     fprintf( fileForPrint, ")" );

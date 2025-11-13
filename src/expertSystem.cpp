@@ -7,25 +7,28 @@
 #include "myStringFunction.h"
 #include "paint.h"
 #include "treeDump.h"
+#include "parseFileDataBase.h"
 
 size_t maxLenForAnswer = 40;        // start size for answer from user
+size_t startPosition = 0;           // start position for read from file
 
 expertSystemErrors startExpertSystem( tree_t* tree ){
     if( tree == NULL ){
         return TREE_NULL_PTR;
     }
 
-    char userChoice = '\0';
     expertSystemErrors statusOfSystem = CORRECT_WORK;
+    char userChoice = '\0';
     colorPrintf( NOMODE, YELLOW, "Expert system loading...\nI'm a expert system - choose an object and i'm guess it\n\n" );
     while( true ){
         colorPrintf( NOMODE, BLUE, "What do you want?\n"
-                                "[g] - guesses\n"
-                                "[w] - write in file\n"
-                                "[d] - give a definition\n"
-                                "[f] - give differences\n"
-                                "[s] - stop\n"
-                                "Your choice: " );
+                                   "[r] - read data base from your file\n"
+                                   "[g] - guesses\n"
+                                   "[w] - write in file\n"
+                                   "[d] - give a definition\n"
+                                   "[f] - give differences\n"
+                                   "[s] - stop\n"
+                                   "Your choice: " );
 
         scanf( "%1c", &userChoice );
         cleanBuffer();
@@ -35,6 +38,13 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
         }
 
         switch( userChoice ){
+            case 'r':
+                statusOfSystem = createTreeFromFile( tree );
+                if( statusOfSystem != CORRECT_WORK ){
+                    colorPrintf( NOMODE, RED, "\nError of create, type of err = %d\n", statusOfSystem );
+                    return statusOfSystem;
+                }
+                break;
             case 'g':
                 statusOfSystem = guessElement( tree );
                 if( statusOfSystem != CORRECT_WORK ){
@@ -258,18 +268,6 @@ void cleanBuffer(){
     while( ( symbol = getchar() ) != '\n' );
 }
 
-expertSystemErrors writeInformationInFile( tree_t* tree ){
-    if( tree == NULL ){
-        return TREE_NULL_PTR;
-    }
-
-    FILE* fileForTree = fopen( "treeInformation.txt", "w" );
-
-    dumpTreeInFile( tree, fileForTree );
-
-    return CORRECT_WORK;
-}
-
 expertSystemErrors giveDefinition( tree_t* tree ){
     if( tree == NULL ){
         return TREE_NULL_PTR;
@@ -293,7 +291,7 @@ expertSystemErrors giveDefinition( tree_t* tree ){
 }
 
 informationAboutFind printDefinition( node_t* node, char* answer ){
-    if( node == NULL ){
+    if( node == NULL || answer == NULL ){
         return NOT_FIND;
     }
 
@@ -333,6 +331,7 @@ expertSystemErrors giveDifferences( tree_t* tree ){
     char* firstObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
     char* secondObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
 
+// TODO hui
     colorPrintf( NOMODE, YELLOW, "You have selected the option to compare two objects\nEnter the name of the first one: " );
     expertSystemErrors statusOfProgramWork = takeNameOfObject( &firstObject );
     if( statusOfProgramWork != CORRECT_WORK ){
@@ -346,7 +345,6 @@ expertSystemErrors giveDifferences( tree_t* tree ){
         return statusOfProgramWork;
     }
     colorPrintf( NOMODE, BLUE, "\n%s\n", secondObject );
-
 
     printDifferences( tree->rootTree, firstObject, secondObject );
 
@@ -374,6 +372,7 @@ informationAboutFind printDifferences( node_t* node, char* firstObject, char* se
     if( node->left ){
         statusOfDetectedFromLeft = printDifferences( node->left, firstObject, secondObject );
     }
+
     if( node->right ){
         statusOfDetectedFromRight = printDifferences( node->right, firstObject, secondObject );
     }

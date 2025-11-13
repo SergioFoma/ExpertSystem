@@ -1,1 +1,1 @@
-("It is unknown who" ("Animals" ("Poltarashka" )("Matan teaches" ("Baraban" )("Nikita" ))))
+("It is unknown who"nil("Animals"("he is angry"("dog"nilnil)("Poltarashka"nilnil))("Matan teaches"("Baraban"nilnil)("Nikita"nilnil))))
