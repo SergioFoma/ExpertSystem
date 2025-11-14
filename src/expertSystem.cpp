@@ -8,7 +8,7 @@
 #include "paint.h"
 #include "parseFileDataBase.h"
 
-size_t maxLenForAnswer = 40;        // start size for answer from user
+const size_t maxLenForAnswer = 40;  // start size for answer from user
 size_t startPosition = 0;           // start position for read from file
 
 expertSystemErrors startExpertSystem( tree_t* tree ){
@@ -86,12 +86,13 @@ expertSystemErrors guessElement( tree_t* tree ){
     node_t* nodePtr = tree->rootTree;
     node_t* previousNodePtr = nodePtr;
 
-    char* answer = (char*)calloc( maxLenForAnswer, sizeof( char ) );
+    size_t sizeOfAnswer = maxLenForAnswer;
+    char* answer = (char*)calloc( sizeOfAnswer, sizeof( char ) );
     if( answer == NULL ){
         return CAN_NOT_DO_ALLOCATION;
     }
 
-    expertSystemErrors systemErr = goToSheetOfTree( &nodePtr, &previousNodePtr, &answer );
+    expertSystemErrors systemErr = goToSheetOfTree( &nodePtr, &previousNodePtr, &answer, &sizeOfAnswer );
     if( systemErr != CORRECT_WORK ){
         return systemErr;
     }
@@ -103,7 +104,7 @@ expertSystemErrors guessElement( tree_t* tree ){
 
     }
 
-    systemErr = insertNewElement( &previousNodePtr, &answer );
+    systemErr = insertNewElement( &previousNodePtr, &answer, &sizeOfAnswer );
     if( systemErr != CORRECT_WORK ){
         return systemErr;
     }
@@ -111,7 +112,7 @@ expertSystemErrors guessElement( tree_t* tree ){
     return CORRECT_WORK;
 }
 
-expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, char** answer ){
+expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, char** answer, size_t* sizeOfAnswer ){
     if( nodePtr == NULL || previousNodePtr == NULL || answer == NULL ){
         return NULL_PTR_IN_FUNC;
     }
@@ -121,10 +122,10 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
         cleanLine( *answer );
 
         colorPrintf( NOMODE, BLUE, treeValueFormat "?\n", (*nodePtr)->data );
-        systemErr = takeAnAnswer( answer );
+        systemErr = takeAnAnswer( answer, sizeOfAnswer );
         while( systemErr != CORRECT_WORK ){
             cleanLine( *answer );
-            systemErr = takeAnAnswer( answer );
+            systemErr = takeAnAnswer( answer, sizeOfAnswer );
         }
 
         *previousNodePtr = *nodePtr;
@@ -141,14 +142,14 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
     return CORRECT_WORK;
 }
 
-expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer ){
+expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer, size_t* sizeOfAnswer ){
     if( previousNodePtr == NULL || answer == NULL ){
         return NULL_PTR_IN_FUNC;
     }
 
     colorPrintf( NOMODE, YELLOW, "\n\nWhat name of this object?\n\n" );
     cleanLine( *answer );
-    expertSystemErrors systemErr = takeNameOfObject( answer );
+    expertSystemErrors systemErr = takeNameOfObject( answer, sizeOfAnswer );
     if( systemErr != CORRECT_WORK ){
         return systemErr;
     }
@@ -157,9 +158,10 @@ expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer ){
 
     colorPrintf( NOMODE, YELLOW, "\n\nHow is different from %s?\n\n", (*previousNodePtr)->data );
 
-    char* differences = (char*)calloc( maxLenForAnswer, sizeof( char ) );
+    size_t sizeOfDifferences = maxLenForAnswer;
+    char* differences = (char*)calloc( sizeOfDifferences, sizeof( char ) );
 
-    systemErr = takeNameOfObject( &differences );
+    systemErr = takeNameOfObject( &differences, &sizeOfDifferences );
     if( systemErr != CORRECT_WORK ){
         return systemErr;
     }
@@ -173,15 +175,15 @@ expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer ){
     return CORRECT_WORK;
 }
 
-expertSystemErrors takeAnAnswer( char** answer ){
+expertSystemErrors takeAnAnswer( char** answer, size_t* sizeOfLine ){
     if( answer == NULL ){
         return NULL_PTR_IN_FUNC;
     }
 
     char* lineForRecording = NULL;
     size_t sizeOfAllocationMemory = 0;
-    ssize_t sizeOfLine = myGetline( &lineForRecording, &sizeOfAllocationMemory, stdin );
-    if( sizeOfLine == -1 ){
+    ssize_t statusOfGetline = myGetline( &lineForRecording, &sizeOfAllocationMemory, stdin );
+    if( statusOfGetline == -1 ){
         return ERROR_WITH_GETLINE;
     }
 
@@ -189,9 +191,9 @@ expertSystemErrors takeAnAnswer( char** answer ){
     int statusOfClean = 0;
 
     while( lineForRecording[ lineIndex ] != '\0' && lineForRecording[ lineIndex ] != ' ' ){
-        if( lineIndex == maxLenForAnswer - 1 ){
-            maxLenForAnswer *= 2;
-            (*answer) = (char*)realloc( *answer, sizeof( char ) * maxLenForAnswer );
+        if( lineIndex == *sizeOfLine - 1 ){
+            (*sizeOfLine) *= 2;
+            (*answer) = (char*)realloc( *answer, sizeof( char ) * (*sizeOfLine) );
             if( *answer == NULL ){
                 return CAN_NOT_DO_ALLOCATION;
             }
@@ -229,36 +231,16 @@ expertSystemErrors takeAnAnswer( char** answer ){
 
 }
 
-expertSystemErrors takeNameOfObject( char** answer ){
+expertSystemErrors takeNameOfObject( char** answer, size_t* sizeOfLine ){
     if( answer == NULL ){
         return NULL_PTR_IN_FUNC;
     }
 
-    char* lineForRecording = NULL;
-    size_t sizeOfAllocationMemory = 0;
-    ssize_t sizeOfLine = myGetline( &lineForRecording, &sizeOfAllocationMemory, stdin );
-    if( sizeOfLine == -1 ){
+    ssize_t statusOfGetline = myGetline( answer, sizeOfLine, stdin );
+    if( statusOfGetline == -1 ){
         return ERROR_WITH_GETLINE;
     }
 
-    size_t lineIndex = 0;
-
-    while( lineForRecording[ lineIndex ] != '\0' ){
-        if( lineIndex == maxLenForAnswer - 1 ){
-            maxLenForAnswer *= 2;
-            (*answer) = (char*)realloc( *answer, sizeof( char ) * maxLenForAnswer );
-            if( *answer == NULL ){
-                return CAN_NOT_DO_ALLOCATION;
-            }
-        }
-
-        (*answer)[ lineIndex ] = lineForRecording[ lineIndex ];
-        ++lineIndex;
-    }
-
-    (*answer)[ lineIndex ] = '\0';
-
-    free( lineForRecording );
     return CORRECT_WORK;
 }
 
@@ -268,12 +250,13 @@ expertSystemErrors giveDefinition( tree_t* tree ){
     }
 
     colorPrintf( NOMODE, YELLOW, "Enter the name of object: " );
-    char* nameOfObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
+    size_t sizeOfName = maxLenForAnswer;
+    char* nameOfObject = (char*)calloc( sizeOfName, sizeof( char ) );
     if( nameOfObject == NULL ){
         return CAN_NOT_DO_ALLOCATION;
     }
 
-    takeNameOfObject( &nameOfObject );
+    takeNameOfObject( &nameOfObject, &sizeOfName );
 
     informationAboutFind statusOfFind = printDefinition( tree->rootTree, nameOfObject );
     if( statusOfFind == NOT_FIND ){
@@ -322,19 +305,21 @@ expertSystemErrors giveDifferences( tree_t* tree ){
         return TREE_NULL_PTR;
     }
 
-    char* firstObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
-    char* secondObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
+    size_t sizeOfFirstObject = maxLenForAnswer;
+    char* firstObject = (char*)calloc( sizeOfFirstObject, sizeof( char ) );
+    size_t sizeOfSecondObject = maxLenForAnswer;
+    char* secondObject = (char*)calloc( sizeOfSecondObject, sizeof( char ) );
 
     colorPrintf( NOMODE, YELLOW, "You have selected the option to compare two objects\n"
                                  "Enter the name of the first one: " );
-    expertSystemErrors statusOfProgramWork = takeNameOfObject( &firstObject );
+    expertSystemErrors statusOfProgramWork = takeNameOfObject( &firstObject, &sizeOfFirstObject );
     if( statusOfProgramWork != CORRECT_WORK ){
         return statusOfProgramWork;
     }
     colorPrintf( NOMODE, BLUE, "\n%s\n", firstObject );
 
     colorPrintf( NOMODE, YELLOW, "\nEnter the name of second one: " );
-    statusOfProgramWork = takeNameOfObject( &secondObject );
+    statusOfProgramWork = takeNameOfObject( &secondObject, &sizeOfSecondObject);
     if( statusOfProgramWork != CORRECT_WORK ){
         return statusOfProgramWork;
     }

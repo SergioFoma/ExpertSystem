@@ -39,13 +39,13 @@ expertSystemErrors startExpertSystem( tree_t* tree );
 
 expertSystemErrors guessElement( tree_t* tree );
 
-expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, char** answer );
+expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, char** answer, size_t* sizeOfLine );
 
-expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer );
+expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer, size_t* sizeOfLine );
 
-expertSystemErrors takeAnAnswer( char** answer );
+expertSystemErrors takeAnAnswer( char** answer, size_t* sizeOfLine );
 
-expertSystemErrors takeNameOfObject( char** answer );
+expertSystemErrors takeNameOfObject( char** answer, size_t* sizeOfLine );
 
 expertSystemErrors giveDefinition( tree_t* tree );
 

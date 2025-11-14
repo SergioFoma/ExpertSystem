@@ -6,45 +6,16 @@
 
 ssize_t myGetline( char** line, size_t* n, FILE* stream ) {
 
-    const size_t startSize = 32;
-
-    if( line == NULL ) {
+    ssize_t sizeOfLine = getline( line, n, stdin );
+    if( sizeOfLine == -1 ){
         return -1;
     }
 
-    if ( *line == NULL ) {
-        char* tryLine =( char* )calloc( startSize, sizeof( char ) );
-
-        if ( tryLine == NULL ) {
-            return -1;
-        }
-        *n = startSize;
-        *line = tryLine;
+    if( (*line)[ sizeOfLine - 1 ] == '\n' ){
+        (*line)[ sizeOfLine - 1 ] = '\0';
     }
 
-    int getChar = 0;
-    ssize_t indexCopyLine = 0;
-
-    while( ( getChar = fgetc( stream) ) != '\n' && getChar != EOF ) {
-
-        if ( indexCopyLine == ( *n - 1 ) ) {
-            char* tryLine = ( char* )realloc( *line, 2 * (*n) );
-
-            if ( tryLine == NULL ) {
-                return -1;
-            }
-            *line = tryLine;
-
-            ( *n ) *= 2;
-        }
-
-        (*line)[ indexCopyLine++  ] = getChar;
-    }
-
-    (*line)[ indexCopyLine ] = '\0';
-
-    return indexCopyLine;
-
+    return sizeOfLine;
 }
 
 int cleanLine( char* lineForClean ){
