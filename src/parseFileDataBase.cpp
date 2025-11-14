@@ -16,10 +16,11 @@ expertSystemErrors writeInformationInFile( tree_t* tree ){
     }
 
     colorPrintf( NOMODE, YELLOW, "\nEnter the name of file were do you want save data base: " );
-
+    voiceTheLine( "Enter the name of file were do you want save data base: " );
+    
     char* fileNameForWrite = NULL;
     size_t sizeOfAllocationMemory = 0;
-    ssize_t sizeOfLine = myGetline( &fileNameForWrite, &sizeOfAllocationMemory, stdin );
+    ssize_t sizeOfLine = getlineWrapper( &fileNameForWrite, &sizeOfAllocationMemory, stdin );
     if( sizeOfLine == -1 ){
         return ERROR_WITH_GETLINE;
     }
@@ -27,6 +28,7 @@ expertSystemErrors writeInformationInFile( tree_t* tree ){
     FILE* fileForTree = fopen( fileNameForWrite, "w" );
     if( fileForTree == NULL ){
         colorPrintf( NOMODE, RED, "\nError with write data base in file\n" );
+        voiceTheLine( "Error with write data base in file" );
         return ERROR_WITH_FILE;
     }
 
@@ -70,6 +72,7 @@ void getFileSize( bufferInformation* bufferFromFile, const char* nameOfFile ){
     int status = stat( nameOfFile, &fileText );
     if( status == -1 ){
         colorPrintf( NOMODE, RED, "\nError of get information from file\n" );
+        voiceTheLine( "Error of get information from file" );
         return ;
     }
 
@@ -82,16 +85,20 @@ expertSystemErrors createTreeFromFile( tree_t* tree ){
     }
 
     colorPrintf( NOMODE, YELLOW, "Enter the name of file, where i will find information for my data base: " );
+    voiceTheLine( "Enter the name of file, where i will find information for my data base: " );
+
     char* nameOfFileForDataBase = NULL;
     size_t sizeOfAllocationMemory = 0;
-    ssize_t sizeOfLine = myGetline( &nameOfFileForDataBase, &sizeOfAllocationMemory, stdin );
+    ssize_t sizeOfLine = getlineWrapper( &nameOfFileForDataBase, &sizeOfAllocationMemory, stdin );
+
     if( sizeOfLine == -1 ){
         return ERROR_WITH_GETLINE;
     }
 
     FILE* fileForDataBase = fopen( nameOfFileForDataBase, "r" );
     if( fileForDataBase == NULL ){
-        colorPrintf( NOMODE, RED, "\n can not open file:%s %s %d\n", __FILE__, __func__, __LINE__ );
+        colorPrintf( NOMODE, RED, "\ncan not open file:%s %s %d\n", __FILE__, __func__, __LINE__ );
+        voiceTheLine( "can not open file" );
         free( nameOfFileForDataBase );
         return ERROR_WITH_FILE;
     }
@@ -110,6 +117,7 @@ expertSystemErrors createTreeFromFile( tree_t* tree ){
     destroyBufferInformation( &dataBaseFromFile );
 
     colorPrintf( NOMODE, GREEN, "Expert system successful get data from your file\n" );
+    voiceTheLine( "Expert system successful get data from your file" );
     return CORRECT_WORK;
 }
 

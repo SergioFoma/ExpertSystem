@@ -19,6 +19,8 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
     expertSystemErrors statusOfSystem = CORRECT_WORK;
     char userChoice = '\0';
     colorPrintf( NOMODE, YELLOW, "Expert system loading...\nI'm a expert system - choose an object and i'm guess it\n\n" );
+    voiceTheLine( "Expert system loading. I'm a expert system - choose an object and i'm guess it" );
+
     while( true ){
         colorPrintf( NOMODE, BLUE, "What do you want?\n"
                                    "[r] - read data base from your file\n"
@@ -33,6 +35,7 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
         cleanBuffer();
         if( userChoice == 's' ){
             colorPrintf( NOMODE, GREEN, "\nExpert system finish her work\n" );
+            voiceTheLine( "Expert system finish her work" );
             return CORRECT_WORK;
         }
 
@@ -40,7 +43,6 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
             case REED_DATA_BASE:
                 statusOfSystem = createTreeFromFile( tree );
                 if( statusOfSystem != CORRECT_WORK ){
-                    colorPrintf( NOMODE, RED, "\nError of create, type of err = %d\n", statusOfSystem );
                     return statusOfSystem;
                 }
                 break;
@@ -52,9 +54,11 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
                 break;
             case WRITE_IN_FILE:
                 statusOfSystem = writeInformationInFile( tree );
-                if( statusOfSystem == CORRECT_WORK ){
-                    colorPrintf( NOMODE, GREEN, "Information about database write in file!\n" );
+                if( statusOfSystem != CORRECT_WORK ){
+                    return statusOfSystem;
                 }
+                colorPrintf( NOMODE, GREEN, "Information about database write in file!\n" );
+                voiceTheLine( "Information about database write in file" );
                 break;
             case GIVE_DEFINITION:
                 statusOfSystem = giveDefinition( tree );
@@ -70,6 +74,7 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
                 break;
             default:
                 colorPrintf( NOMODE, RED, "You have entered an unknown command, try again.\n" );
+                voiceTheLine( "You have entered an unknown command, try again." );
                 break;
         }
         printf( "\n\n" );
@@ -81,6 +86,9 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
 expertSystemErrors guessElement( tree_t* tree ){
     if( tree == NULL ){
         return TREE_NULL_PTR;
+    }
+    else if( tree->rootTree == NULL ){
+        initTree( tree );
     }
 
     node_t* nodePtr = tree->rootTree;
@@ -99,6 +107,7 @@ expertSystemErrors guessElement( tree_t* tree ){
 
     if( strcmp( answer, "YES" ) == 0 ){
         colorPrintf( NOMODE, GREEN, "\n\nThe expert system guessed the hidden object!\n\n" );
+        voiceTheLine( "The expert system guessed the hidden object!" );
         free( answer );
         return CORRECT_WORK;
 
@@ -122,6 +131,7 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
         cleanLine( *answer );
 
         colorPrintf( NOMODE, BLUE, treeValueFormat "?\n", (*nodePtr)->data );
+        //voiceTheLine( (*nodePtr)->data "?" );
         systemErr = takeAnAnswer( answer, sizeOfAnswer );
         while( systemErr != CORRECT_WORK ){
             cleanLine( *answer );
@@ -148,6 +158,7 @@ expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer, si
     }
 
     colorPrintf( NOMODE, YELLOW, "\n\nWhat name of this object?\n\n" );
+    voiceTheLine( "What name of this object?" );
     cleanLine( *answer );
     expertSystemErrors systemErr = takeNameOfObject( answer, sizeOfAnswer );
     if( systemErr != CORRECT_WORK ){
@@ -157,6 +168,7 @@ expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer, si
     initNode( &( (*previousNodePtr)->left ), *answer  ) ;
 
     colorPrintf( NOMODE, YELLOW, "\n\nHow is different from %s?\n\n", (*previousNodePtr)->data );
+    //voiceTheLine( "How is different from %s?" );
 
     size_t sizeOfDifferences = maxLenForAnswer;
     char* differences = (char*)calloc( sizeOfDifferences, sizeof( char ) );
@@ -171,6 +183,7 @@ expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer, si
     (*previousNodePtr)->data = differences;
 
     colorPrintf( NOMODE, GREEN, "\nI am remember this object and added to my data base\n" );
+    voiceTheLine( "I am remember this object and added to my data base" );
 
     return CORRECT_WORK;
 }
@@ -182,7 +195,7 @@ expertSystemErrors takeAnAnswer( char** answer, size_t* sizeOfLine ){
 
     char* lineForRecording = NULL;
     size_t sizeOfAllocationMemory = 0;
-    ssize_t statusOfGetline = myGetline( &lineForRecording, &sizeOfAllocationMemory, stdin );
+    ssize_t statusOfGetline = getlineWrapper( &lineForRecording, &sizeOfAllocationMemory, stdin );
     if( statusOfGetline == -1 ){
         return ERROR_WITH_GETLINE;
     }
@@ -207,6 +220,7 @@ expertSystemErrors takeAnAnswer( char** answer, size_t* sizeOfLine ){
 
     if( strlen( (*answer) ) != strlen( lineForRecording ) ){
         colorPrintf( NOMODE, RED, "\n\nYour answer in too long\n\n" );
+        voiceTheLine( "Your answer in too long" );
         statusOfClean = cleanLine( (*answer) );
         if( statusOfClean != 0 ){
             free( lineForRecording );
@@ -217,6 +231,7 @@ expertSystemErrors takeAnAnswer( char** answer, size_t* sizeOfLine ){
     }
     else if( strcmp( (*answer), "NO" ) != 0 && strcmp( (*answer), "YES" ) != 0 ){
         colorPrintf( NOMODE, RED, "\n\nYour answer should be \"YES\" or \"NO\"\n\n" );
+        voiceTheLine( "Your answer should be \"YES\" or \"NO\" ");
         statusOfClean = cleanLine( (*answer) );
         if( statusOfClean != 0 ){
             free( lineForRecording );
@@ -236,7 +251,7 @@ expertSystemErrors takeNameOfObject( char** answer, size_t* sizeOfLine ){
         return NULL_PTR_IN_FUNC;
     }
 
-    ssize_t statusOfGetline = myGetline( answer, sizeOfLine, stdin );
+    ssize_t statusOfGetline = getlineWrapper( answer, sizeOfLine, stdin );
     if( statusOfGetline == -1 ){
         return ERROR_WITH_GETLINE;
     }
@@ -248,8 +263,13 @@ expertSystemErrors giveDefinition( tree_t* tree ){
     if( tree == NULL ){
         return TREE_NULL_PTR;
     }
+    else if( tree->rootTree == NULL ){
+        return ROOT_NULL_PTR;
+    }
 
     colorPrintf( NOMODE, YELLOW, "Enter the name of object: " );
+    voiceTheLine( "Enter the name of object: " );
+
     size_t sizeOfName = maxLenForAnswer;
     char* nameOfObject = (char*)calloc( sizeOfName, sizeof( char ) );
     if( nameOfObject == NULL ){
@@ -261,6 +281,7 @@ expertSystemErrors giveDefinition( tree_t* tree ){
     informationAboutFind statusOfFind = printDefinition( tree->rootTree, nameOfObject );
     if( statusOfFind == NOT_FIND ){
         colorPrintf( NOMODE, RED, "You enter the name of unknown object. Try again\n" );
+        voiceTheLine( "You enter the name of unknown object. Try again" );
     }
 
     free( nameOfObject );
@@ -304,6 +325,9 @@ expertSystemErrors giveDifferences( tree_t* tree ){
     if( tree == NULL ){
         return TREE_NULL_PTR;
     }
+    else if( tree->rootTree == NULL ){
+        return ROOT_NULL_PTR;
+    }
 
     size_t sizeOfFirstObject = maxLenForAnswer;
     char* firstObject = (char*)calloc( sizeOfFirstObject, sizeof( char ) );
@@ -312,18 +336,19 @@ expertSystemErrors giveDifferences( tree_t* tree ){
 
     colorPrintf( NOMODE, YELLOW, "You have selected the option to compare two objects\n"
                                  "Enter the name of the first one: " );
+    voiceTheLine(  "You have selected the option to compare two objects. Enter the name of the first one: " );
+
     expertSystemErrors statusOfProgramWork = takeNameOfObject( &firstObject, &sizeOfFirstObject );
     if( statusOfProgramWork != CORRECT_WORK ){
         return statusOfProgramWork;
     }
-    colorPrintf( NOMODE, BLUE, "\n%s\n", firstObject );
 
     colorPrintf( NOMODE, YELLOW, "\nEnter the name of second one: " );
+    voiceTheLine( "Enter the name of second one: " );
     statusOfProgramWork = takeNameOfObject( &secondObject, &sizeOfSecondObject);
     if( statusOfProgramWork != CORRECT_WORK ){
         return statusOfProgramWork;
     }
-    colorPrintf( NOMODE, BLUE, "\n%s\n", secondObject );
 
     printDifferences( tree->rootTree, firstObject, secondObject );
 

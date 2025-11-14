@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <ctype.h>
 
-ssize_t myGetline( char** line, size_t* n, FILE* stream ) {
+ssize_t getlineWrapper( char** line, size_t* n, FILE* stream ) {
 
     ssize_t sizeOfLine = getline( line, n, stdin );
     if( sizeOfLine == -1 ){

@@ -12,7 +12,8 @@ enum expertSystemErrors {
     TREE_NULL_PTR           = 5,
     TREE_ERRORS             = 6,
     NULL_PTR_IN_FUNC        = 7,
-    ERROR_WITH_FILE         = 8
+    ERROR_WITH_FILE         = 8,
+    ROOT_NULL_PTR           = 9
 };
 
 enum informationAboutFind {
@@ -34,6 +35,8 @@ enum typeOfOperation{
     GIVE_DIFFERENCES    = 'f',
     STOP                = 's'
 };
+
+#define voiceTheLine( lineThatNeedVoiced ) system( "echo " lineThatNeedVoiced " | festival --tts")
 
 expertSystemErrors startExpertSystem( tree_t* tree );
 

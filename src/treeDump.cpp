@@ -14,25 +14,25 @@ void dumpNode( node_t* node, int rank, FILE* treeFile ){
     assert( node );
     assert( treeFile );
 
-    fprintf( treeFile, "\tnode%lx [shape=\"plain\"; style =\"filled\"; fillcolor =\"azure3\"; label = "
-                        "<<table><tr><td> %p </td></tr> <tr><td> " treeValueFormat "</td></tr> ",
+    fprintf( treeFile, "\tnode%lx [shape=\"plain\"; style =\"filled\"; fillcolor =\"hotpink2\"; label = "
+                        "<<table><tr><td colspan = \"2\" > %p </td></tr> <tr><td width = \"100\" colspan = \"2\" > " treeValueFormat "</td></tr> ",
                         ( unsigned long )node, node, node->data  );
 
     if( node->left ){
-        fprintf( treeFile, "<tr><td> %p </td></tr>", node->left );
+        fprintf( treeFile, "<tr><td> %p </td>", node->left );
     }
     else{
-        fprintf( treeFile, "<tr><td> NULL </td></tr>" );
+        fprintf( treeFile, "<tr><td> NULL </td>" );
     }
 
     if( node->right ){
-        fprintf( treeFile, "<tr><td> %p </td></tr>", node->right );
+        fprintf( treeFile, "<td> %p </td></tr>", node->right );
     }
     else{
-        fprintf( treeFile, "<tr><td> NULL </td></tr>" );
+        fprintf( treeFile, "<td> NULL </td></tr>" );
     }
 
-    fprintf( treeFile, "</table>>;color = \"red\"];\n" );
+    fprintf( treeFile, "</table>>;];\n" );
 
     fprintf( treeFile, "\t{\n"
                        "\t\trank = %d;\n"
@@ -57,6 +57,9 @@ void dumpNode( node_t* node, int rank, FILE* treeFile ){
 
 treeErrors dumpTree( tree_t* tree ){
     assert( tree );
+    if( tree->rootTree == NULL ){
+        return NODE_NULL_PTR;
+    }
 
     FILE* treeFile = fopen( "treeDump.txt", "w" );
 
