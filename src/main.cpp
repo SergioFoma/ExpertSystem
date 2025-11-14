@@ -9,13 +9,10 @@
 int main(){
 
     tree_t tree = {};
-    
+
     expertSystemErrors statusOfExpertSystem = startExpertSystem( &tree );
-    if( statusOfExpertSystem != CORRECT_WORK ){
-        colorPrintf( NOMODE, RED, "\n\nError of system\n\n" );
-        destroyTree( &tree );
-        return 0;
-    }
+
+    checkingTheStatusOfTheExpertSystem( statusOfExpertSystem );
 
     dumpTree( &tree );
 

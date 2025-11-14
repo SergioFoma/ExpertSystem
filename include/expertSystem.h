@@ -58,6 +58,8 @@ expertSystemErrors giveDifferences( tree_t* tree );
 
 informationAboutFind printDifferences( node_t* node, char* firstObject, char* secondObject );
 
+void checkingTheStatusOfTheExpertSystem( expertSystemErrors statusOfExpertSystem );
+
 #endif
 
 

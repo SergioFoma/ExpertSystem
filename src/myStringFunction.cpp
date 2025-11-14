@@ -6,7 +6,7 @@
 
 ssize_t getlineWrapper( char** line, size_t* n, FILE* stream ) {
 
-    ssize_t sizeOfLine = getline( line, n, stdin );
+    ssize_t sizeOfLine = getline( line, n, stream );
     if( sizeOfLine == -1 ){
         return -1;
     }

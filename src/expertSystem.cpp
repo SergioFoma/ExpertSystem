@@ -403,3 +403,49 @@ informationAboutFind printDifferences( node_t* node, char* firstObject, char* se
 
     return FINISH_FIND;
 }
+
+void checkingTheStatusOfTheExpertSystem( expertSystemErrors statusOfExpertSystem ){
+    switch( statusOfExpertSystem ){
+        case CORRECT_WORK:
+            return ;
+        case CAN_NOT_DO_ALLOCATION:
+            colorPrintf( NOMODE, RED, "\nError of allocation memory\n" );
+            voiceTheLine( "Error of allocation memory" );
+            break;
+        case ERROR_WITH_GETLINE:
+            colorPrintf( NOMODE, RED, "\nSystem get error from getline\n" );
+            voiceTheLine( "System get error from getline" );
+            break;
+        case NOT_CORRECT_WORK:
+            colorPrintf( NOMODE, RED, "\nExpert system have error with get an answer\n" );
+            voiceTheLine( "Expert system have error with get an answer" );
+            break;
+        case ERROR_OF_CLEAN:
+            colorPrintf( NOMODE, RED, "\nSystem can not clean line after your answer\n" );
+            voiceTheLine( "System can not clean line after your answer" );
+            break;
+        case TREE_NULL_PTR:
+            colorPrintf( NOMODE, RED, "\nSystem get a null ptr on your tree\n" );
+            voiceTheLine( "System get a null ptr on your tree" );
+            break;
+        case TREE_ERRORS:
+            colorPrintf( NOMODE, RED, "\nSystem get errors from tree functions\n" );
+            voiceTheLine( "System get errors from tree functions" );
+            break;
+        case NULL_PTR_IN_FUNC:
+            colorPrintf( NOMODE, RED, "\nSystem get null ptr\n" );
+            voiceTheLine( "System get null ptr" );
+            break;
+        case ERROR_WITH_FILE:
+            colorPrintf( NOMODE, RED, "\nSystem have error with files\n" );
+            voiceTheLine( "System have error with files" );
+            break;
+        case ROOT_NULL_PTR:
+            colorPrintf( NOMODE, RED, "\nSystem get null ptr on root of tree\n" );
+            voiceTheLine( "System get null ptr on root of tree" );
+            break;
+        default:
+            return ;
+    }
+}
+
