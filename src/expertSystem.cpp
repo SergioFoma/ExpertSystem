@@ -129,9 +129,10 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
     expertSystemErrors systemErr = CORRECT_WORK;
     do{
         cleanLine( *answer );
-
+        
+        printAnimation();
         colorPrintf( NOMODE, BLUE, treeValueFormat "?\n", (*nodePtr)->data );
-        //voiceTheLine( (*nodePtr)->data "?" );
+        voiceTheLine( (*nodePtr)->data );
         systemErr = takeAnAnswer( answer, sizeOfAnswer );
         while( systemErr != CORRECT_WORK ){
             cleanLine( *answer );
@@ -168,7 +169,7 @@ expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer, si
     initNode( &( (*previousNodePtr)->left ), *answer  ) ;
 
     colorPrintf( NOMODE, YELLOW, "\n\nHow is different from %s?\n\n", (*previousNodePtr)->data );
-    //voiceTheLine( "How is different from %s?" );
+    voiceTheLine( "How do they differ?" );
 
     size_t sizeOfDifferences = maxLenForAnswer;
     char* differences = (char*)calloc( sizeOfDifferences, sizeof( char ) );
@@ -447,5 +448,34 @@ void checkingTheStatusOfTheExpertSystem( expertSystemErrors statusOfExpertSystem
         default:
             return ;
     }
+}
+
+void voiceTheLine( const char* lineThatNeedVoiced ){
+
+    size_t sizeOfLine = ( strlen( lineThatNeedVoiced ) + strlen( "echo \"" ) + strlen( "\" | festival --tts" ) + 1 )* sizeof( char );
+
+    char* lineForSystem = (char*)calloc( sizeOfLine , sizeof( char ) );
+
+    snprintf( lineForSystem, sizeOfLine, "echo \"%s\" | festival --tts", lineThatNeedVoiced );
+
+    system( lineForSystem);
+
+    free( lineForSystem );
+}
+
+void printAnimation(){
+    FILE* fileForAnimation = fopen( "design/fileForOutput.txt", "r" );
+    if( fileForAnimation == NULL ){
+        colorPrintf( NOMODE, RED, "\nError of open file for animation\n" );
+        return ;
+    }
+
+    int symbolFromFile = '\0';
+
+    while( ( symbolFromFile = fgetc( fileForAnimation ) ) != EOF ){
+        printf( "%c", symbolFromFile );
+    }
+
+    fclose( fileForAnimation );
 }
 

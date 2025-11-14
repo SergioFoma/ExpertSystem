@@ -36,7 +36,7 @@ enum typeOfOperation{
     STOP                = 's'
 };
 
-#define voiceTheLine( lineThatNeedVoiced ) system( "echo " lineThatNeedVoiced " | festival --tts")
+//#define voiceTheLine( lineThatNeedVoiced ) system( "echo " lineThatNeedVoiced " | festival --tts")
 
 expertSystemErrors startExpertSystem( tree_t* tree );
 
@@ -59,6 +59,10 @@ expertSystemErrors giveDifferences( tree_t* tree );
 informationAboutFind printDifferences( node_t* node, char* firstObject, char* secondObject );
 
 void checkingTheStatusOfTheExpertSystem( expertSystemErrors statusOfExpertSystem );
+
+void voiceTheLine( const char* lineThatNeedVoiced );
+
+void printAnimation();
 
 #endif
 
