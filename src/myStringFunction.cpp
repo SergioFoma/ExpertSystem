@@ -63,3 +63,8 @@ int cleanLine( char* lineForClean ){
 
     return 0;
 }
+
+void cleanBuffer(){
+    int symbol = '\0';
+    while( ( symbol = getchar() ) != '\n' );
+}

@@ -6,7 +6,6 @@
 #include "expertSystem.h"
 #include "myStringFunction.h"
 #include "paint.h"
-#include "treeDump.h"
 #include "parseFileDataBase.h"
 
 size_t maxLenForAnswer = 40;        // start size for answer from user
@@ -38,32 +37,32 @@ expertSystemErrors startExpertSystem( tree_t* tree ){
         }
 
         switch( userChoice ){
-            case 'r':
+            case REED_DATA_BASE:
                 statusOfSystem = createTreeFromFile( tree );
                 if( statusOfSystem != CORRECT_WORK ){
                     colorPrintf( NOMODE, RED, "\nError of create, type of err = %d\n", statusOfSystem );
                     return statusOfSystem;
                 }
                 break;
-            case 'g':
+            case GUESSES:
                 statusOfSystem = guessElement( tree );
                 if( statusOfSystem != CORRECT_WORK ){
                     return statusOfSystem;
                 }
                 break;
-            case 'w':
+            case WRITE_IN_FILE:
                 statusOfSystem = writeInformationInFile( tree );
                 if( statusOfSystem == CORRECT_WORK ){
                     colorPrintf( NOMODE, GREEN, "Information about database write in file!\n" );
                 }
                 break;
-            case 'd':
+            case GIVE_DEFINITION:
                 statusOfSystem = giveDefinition( tree );
                 if( statusOfSystem != CORRECT_WORK ){
                     return statusOfSystem;
                 }
                 break;
-            case 'f':
+            case GIVE_DIFFERENCES:
                 statusOfSystem = giveDifferences( tree );
                 if( statusOfSystem != CORRECT_WORK ){
                     return statusOfSystem;
@@ -104,7 +103,7 @@ expertSystemErrors guessElement( tree_t* tree ){
 
     }
 
-    systemErr = makeNewObject( &previousNodePtr, &answer );
+    systemErr = insertNewElement( &previousNodePtr, &answer );
     if( systemErr != CORRECT_WORK ){
         return systemErr;
     }
@@ -142,7 +141,7 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
     return CORRECT_WORK;
 }
 
-expertSystemErrors makeNewObject( node_t** previousNodePtr, char** answer ){
+expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer ){
     if( previousNodePtr == NULL || answer == NULL ){
         return NULL_PTR_IN_FUNC;
     }
@@ -263,11 +262,6 @@ expertSystemErrors takeNameOfObject( char** answer ){
     return CORRECT_WORK;
 }
 
-void cleanBuffer(){
-    int symbol = '\0';
-    while( ( symbol = getchar() ) != '\n' );
-}
-
 expertSystemErrors giveDefinition( tree_t* tree ){
     if( tree == NULL ){
         return TREE_NULL_PTR;
@@ -331,8 +325,8 @@ expertSystemErrors giveDifferences( tree_t* tree ){
     char* firstObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
     char* secondObject = (char*)calloc( maxLenForAnswer, sizeof( char ) );
 
-// TODO hui
-    colorPrintf( NOMODE, YELLOW, "You have selected the option to compare two objects\nEnter the name of the first one: " );
+    colorPrintf( NOMODE, YELLOW, "You have selected the option to compare two objects\n"
+                                 "Enter the name of the first one: " );
     expertSystemErrors statusOfProgramWork = takeNameOfObject( &firstObject );
     if( statusOfProgramWork != CORRECT_WORK ){
         return statusOfProgramWork;
@@ -379,7 +373,7 @@ informationAboutFind printDifferences( node_t* node, char* firstObject, char* se
 
     if( statusOfDetectedFromLeft == FIND_FIRST_OBJECT && statusOfDetectedFromRight == FIND_SECOND_OBJECT ){
         printDefinition( node, firstObject );
-        colorPrintf( NOMODE, PURPLE, " ,but " );
+        colorPrintf( NOMODE, PURPLE, ",but " );
         printDefinition( node, secondObject );
         return FINISH_FIND;
     }

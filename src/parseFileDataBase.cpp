@@ -68,8 +68,11 @@ void getFileSize( bufferInformation* bufferFromFile, const char* nameOfFile ){
 
     struct stat fileText;
     int status = stat( nameOfFile, &fileText );
+    if( status == -1 ){
+        colorPrintf( NOMODE, RED, "\nError of get information from file\n" );
+        return ;
+    }
 
-    colorPrintf(NOMODE, YELLOW, "Size of file: %d\n", fileText.st_size );
     bufferFromFile->fileSize = fileText.st_size;
 }
 
@@ -102,10 +105,11 @@ expertSystemErrors createTreeFromFile( tree_t* tree ){
     char* ptrOnBuffer = dataBaseFromFile.buffer;
     tree->rootTree = createNodeFromFile( &ptrOnBuffer );
 
-    free( nameOfFileForDataBase );
-    colorPrintf( NOMODE, RED, " line after delete = %d\nPtr on buffer", __LINE__);
-    destroyBufferInformation( &dataBaseFromFile );
     fclose( fileForDataBase );
+    free( nameOfFileForDataBase );
+    destroyBufferInformation( &dataBaseFromFile );
+
+    colorPrintf( NOMODE, GREEN, "Expert system successful get data from your file\n" );
     return CORRECT_WORK;
 }
 
@@ -115,7 +119,6 @@ node_t* createNodeFromFile( char** ptrOnSymbolInPosition ){
         return NULL;
     }
 
-    printf( "in function\n" );
     if( *(*ptrOnSymbolInPosition) == '(' ){
         ++(*ptrOnSymbolInPosition);
         char* nodeName = readNodeNameFromFile( ptrOnSymbolInPosition );
@@ -124,12 +127,10 @@ node_t* createNodeFromFile( char** ptrOnSymbolInPosition ){
         newNode->left = createNodeFromFile( ptrOnSymbolInPosition );
         newNode->right = createNodeFromFile( ptrOnSymbolInPosition );
         ++(*ptrOnSymbolInPosition);
-        printf( " pos = '%c', line = %d\n", **ptrOnSymbolInPosition, __LINE__ );
         return newNode;
     }
     else if( **ptrOnSymbolInPosition == 'n' ){
         *ptrOnSymbolInPosition += strlen( "nil" );
-        printf( " pos = '%c', line = %d\n", **ptrOnSymbolInPosition, __LINE__ );
         return NULL;
     }
 
@@ -148,10 +149,7 @@ char* readNodeNameFromFile( char** ptrOnSymbolInPosition ){
     if( nodeName == NULL ){
         return NULL;
     }
-    printf( "startOfLineWithName = %c\nendOfLineWithNodeName = %c\nlen name = %lu\n",
-            *startOfLineWithNodeName, *endOfLineWithNodeName, (size_t)(endOfLineWithNodeName - startOfLineWithNodeName));
     sscanf( startOfLineWithNodeName, "%[^\"]", nodeName );
-    printf( "name = '%s'\n", nodeName );
     *ptrOnSymbolInPosition = endOfLineWithNodeName + 1;
 
     return nodeName;

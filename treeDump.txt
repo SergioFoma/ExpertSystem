@@ -9,7 +9,7 @@ digraph G{
 	}
 		node5030000000d0;
 	node5030000000a0->node5030000000d0[color = "orange"];
-	node5030000000d0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000000d0 </td></tr> <tr><td> Animals</td></tr> <tr><td> 0x503000000100 </td></tr><tr><td> 0x503000000190 </td></tr></table>>;color = "red"];
+	node5030000000d0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000000d0 </td></tr> <tr><td> Animals</td></tr> <tr><td> 0x503000000100 </td></tr><tr><td> 0x5030000001f0 </td></tr></table>>;color = "red"];
 	{
 		rank = 2;
 		node5030000000d0;
@@ -30,44 +30,72 @@ digraph G{
 	}
 		node503000000160;
 	node503000000100->node503000000160[color = "orange"];
-	node503000000160 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000160 </td></tr> <tr><td> live in house</td></tr> <tr><td> 0x503000000310 </td></tr><tr><td> 0x503000000370 </td></tr></table>>;color = "red"];
+	node503000000160 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000160 </td></tr> <tr><td> dangeros</td></tr> <tr><td> 0x503000000190 </td></tr><tr><td> 0x5030000001c0 </td></tr></table>>;color = "red"];
 	{
 		rank = 4;
 		node503000000160;
 	}
-		node503000000310;
-	node503000000160->node503000000310[color = "orange"];
-	node503000000310 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000310 </td></tr> <tr><td> Knopka</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
-	{
-		rank = 5;
-		node503000000310;
-	}
-		node503000000370;
-	node503000000160->node503000000370[color = "orange"];
-	node503000000370 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000370 </td></tr> <tr><td> Poltarashka</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
-	{
-		rank = 5;
-		node503000000370;
-	}
 		node503000000190;
-	node5030000000d0->node503000000190[color = "orange"];
-	node503000000190 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000190 </td></tr> <tr><td> Matan teaches</td></tr> <tr><td> 0x5030000001c0 </td></tr><tr><td> 0x5030000001f0 </td></tr></table>>;color = "red"];
+	node503000000160->node503000000190[color = "orange"];
+	node503000000190 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000190 </td></tr> <tr><td> snake</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+	{
+		rank = 5;
+		node503000000190;
+	}
+		node5030000001c0;
+	node503000000160->node5030000001c0[color = "orange"];
+	node5030000001c0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000001c0 </td></tr> <tr><td> Poltarashka</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+	{
+		rank = 5;
+		node5030000001c0;
+	}
+		node5030000001f0;
+	node5030000000d0->node5030000001f0[color = "orange"];
+	node5030000001f0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000001f0 </td></tr> <tr><td> Matan teaches</td></tr> <tr><td> 0x503000000220 </td></tr><tr><td> 0x5030000002e0 </td></tr></table>>;color = "red"];
 	{
 		rank = 3;
-		node503000000190;
+		node5030000001f0;
 	}
-		node5030000001c0;
-	node503000000190->node5030000001c0[color = "orange"];
-	node5030000001c0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000001c0 </td></tr> <tr><td> Baraban</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+		node503000000220;
+	node5030000001f0->node503000000220[color = "orange"];
+	node503000000220 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000220 </td></tr> <tr><td> he is teached discretnai matematica</td></tr> <tr><td> 0x503000000250 </td></tr><tr><td> 0x503000000280 </td></tr></table>>;color = "red"];
 	{
 		rank = 4;
-		node5030000001c0;
+		node503000000220;
 	}
-		node5030000001f0;
-	node503000000190->node5030000001f0[color = "orange"];
-	node5030000001f0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000001f0 </td></tr> <tr><td> Nikita</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+		node503000000250;
+	node503000000220->node503000000250[color = "orange"];
+	node503000000250 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000250 </td></tr> <tr><td> Pletnev</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+	{
+		rank = 5;
+		node503000000250;
+	}
+		node503000000280;
+	node503000000220->node503000000280[color = "orange"];
+	node503000000280 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000280 </td></tr> <tr><td> Baraban</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+	{
+		rank = 5;
+		node503000000280;
+	}
+		node5030000002e0;
+	node5030000001f0->node5030000002e0[color = "orange"];
+	node5030000002e0 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x5030000002e0 </td></tr> <tr><td> works programmer</td></tr> <tr><td> 0x503000000310 </td></tr><tr><td> 0x503000000340 </td></tr></table>>;color = "red"];
 	{
 		rank = 4;
-		node5030000001f0;
+		node5030000002e0;
+	}
+		node503000000310;
+	node5030000002e0->node503000000310[color = "orange"];
+	node503000000310 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000310 </td></tr> <tr><td> maks</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+	{
+		rank = 5;
+		node503000000310;
+	}
+		node503000000340;
+	node5030000002e0->node503000000340[color = "orange"];
+	node503000000340 [shape="plain"; style ="filled"; fillcolor ="azure3"; label = <<table><tr><td> 0x503000000340 </td></tr> <tr><td> Nikita</td></tr> <tr><td> NULL </td></tr><tr><td> NULL </td></tr></table>>;color = "red"];
+	{
+		rank = 5;
+		node503000000340;
 	}
 }

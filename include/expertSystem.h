@@ -26,13 +26,22 @@ enum informationAboutFind {
     FIND_SECOND_OBJECT    = 8
 };
 
+enum typeOfOperation{
+    REED_DATA_BASE      = 'r',
+    GUESSES             = 'g',
+    WRITE_IN_FILE       = 'w',
+    GIVE_DEFINITION     = 'd',
+    GIVE_DIFFERENCES    = 'f',
+    STOP                = 's'
+};
+
 expertSystemErrors startExpertSystem( tree_t* tree );
 
 expertSystemErrors guessElement( tree_t* tree );
 
 expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, char** answer );
 
-expertSystemErrors makeNewObject( node_t** previousNodePtr, char** answer );
+expertSystemErrors insertNewElement( node_t** previousNodePtr, char** answer );
 
 expertSystemErrors takeAnAnswer( char** answer );
 
@@ -45,8 +54,6 @@ informationAboutFind printDefinition( node_t* node, char* answer );
 expertSystemErrors giveDifferences( tree_t* tree );
 
 informationAboutFind printDifferences( node_t* node, char* firstObject, char* secondObject );
-
-void cleanBuffer();
 
 #endif
 
