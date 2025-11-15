@@ -8,8 +8,10 @@
 #include "paint.h"
 #include "parseFileDataBase.h"
 
-const size_t maxLenForAnswer = 40;  // start size for answer from user
-size_t startPosition = 0;           // start position for read from file
+const size_t maxLenForAnswer = 40;      // start size for answer from user
+size_t startPosition = 0;               // start position for read from file
+const size_t countOfColorsInRGB = 256;  // for color animation
+const size_t sizeOfPicture = 50;        // weight ang hight of picture
 
 expertSystemErrors startExpertSystem( tree_t* tree ){
     if( tree == NULL ){
@@ -129,7 +131,7 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
     expertSystemErrors systemErr = CORRECT_WORK;
     do{
         cleanLine( *answer );
-        
+
         printAnimation();
         colorPrintf( NOMODE, BLUE, treeValueFormat "?\n", (*nodePtr)->data );
         voiceTheLine( (*nodePtr)->data );
@@ -470,10 +472,25 @@ void printAnimation(){
         return ;
     }
 
-    int symbolFromFile = '\0';
+    size_t numberWithColors = 0, redColor = 0, greenColor = 0, blueColor = 0, numberAfterColors = 0;
 
-    while( ( symbolFromFile = fgetc( fileForAnimation ) ) != EOF ){
-        printf( "%c", symbolFromFile );
+    for( size_t x = 0; x < sizeOfPicture; x++ ){
+        for( size_t y = 0; y < sizeOfPicture; y++ ){
+            fscanf( fileForAnimation, "%lu", &numberWithColors );
+            numberAfterColors = numberWithColors % countOfColorsInRGB;
+            numberWithColors /= countOfColorsInRGB;
+
+            blueColor = numberWithColors % countOfColorsInRGB;
+            numberWithColors /= countOfColorsInRGB;
+
+            greenColor = numberWithColors % countOfColorsInRGB;
+            numberWithColors /= countOfColorsInRGB;
+
+            redColor = numberWithColors % countOfColorsInRGB;
+
+            printf( "\033[38;2;%lu;%lu;%lum%c\033[0m", redColor, greenColor, blueColor, 36 );
+        }
+        printf( "\n" );
     }
 
     fclose( fileForAnimation );
