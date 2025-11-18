@@ -15,7 +15,7 @@ FLAGS = -D _DEBUG -ggdb3 -std=c++17 -O0 -Wall -Wextra -Weffc++ -Waggressive-loop
 
 EXE_NAME = $(BUILD_DIR)/Result.out
 
-SOURCES = main.cpp tree.cpp treeDump.cpp expertSystem.cpp myStringFunction.cpp paint.cpp parseFileDataBase.cpp
+SOURCES = main.cpp tree.cpp treeDump.cpp expertSystem.cpp myStringFunction.cpp paint.cpp parseFileDataBase.cpp animationInConsole.cpp
 OBJECTS = $(SOURCES:.cpp=.obj)
 
 OBJECTS_IN_SOURCE = $(addprefix src/, $(OBJECTS))
@@ -34,3 +34,4 @@ makeBuild:
 	mkdir -p ./$(BUILD_DIR)/src
 clean:
 	rm -rf ./$(BUILD_DIR)
+	rm -rf ./design/*.txt

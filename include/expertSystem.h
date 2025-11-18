@@ -62,8 +62,6 @@ void checkingTheStatusOfTheExpertSystem( expertSystemErrors statusOfExpertSystem
 
 void voiceTheLine( const char* lineThatNeedVoiced );
 
-void printAnimation();
-
 #endif
 
 
