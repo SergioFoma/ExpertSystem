@@ -14,4 +14,6 @@ void printPicture( infoAboutGraphicAnimation* animationInfo );
 
 void printVideo( infoAboutGraphicAnimation* animationInfo );
 
+void startMovieSurvey( infoAboutGraphicAnimation* animationInfo );
+
 #endif

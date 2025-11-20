@@ -2,23 +2,100 @@ digraph G{
 	rankdir = TB;
 	node[shape = "hexagon", color = "black", fontsize = 14, shape = record ];
 	edge[color = "red", fontsize = 12];
-	node503000000070 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000070 </td></tr> <tr><td width = "100" colspan = "2" > he is new</td></tr> <tr><td> 0x5030000000a0 </td><td> 0x5030000000d0 </td></tr></table>>;];
+	node503000000070 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000070 </td></tr> <tr><td width = "100" colspan = "2" > It is unknown who</td></tr> <tr><td> NULL </td><td> 0x5030000000a0 </td></tr></table>>;];
 	{
 		rank = 1;
 		node503000000070;
 	}
 		node5030000000a0;
 	node503000000070->node5030000000a0[color = "orange"];
-	node5030000000a0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000000a0 </td></tr> <tr><td width = "100" colspan = "2" > new object</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	node5030000000a0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000000a0 </td></tr> <tr><td width = "100" colspan = "2" > Animals</td></tr> <tr><td> 0x5030000000d0 </td><td> 0x5030000001c0 </td></tr></table>>;];
 	{
 		rank = 2;
 		node5030000000a0;
 	}
 		node5030000000d0;
-	node503000000070->node5030000000d0[color = "orange"];
-	node5030000000d0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000000d0 </td></tr> <tr><td width = "100" colspan = "2" > It is unknown who</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	node5030000000a0->node5030000000d0[color = "orange"];
+	node5030000000d0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000000d0 </td></tr> <tr><td width = "100" colspan = "2" > he is angry</td></tr> <tr><td> 0x503000000100 </td><td> 0x503000000130 </td></tr></table>>;];
 	{
-		rank = 2;
+		rank = 3;
 		node5030000000d0;
+	}
+		node503000000100;
+	node5030000000d0->node503000000100[color = "orange"];
+	node503000000100 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000100 </td></tr> <tr><td width = "100" colspan = "2" > dog</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	{
+		rank = 4;
+		node503000000100;
+	}
+		node503000000130;
+	node5030000000d0->node503000000130[color = "orange"];
+	node503000000130 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000130 </td></tr> <tr><td width = "100" colspan = "2" > dangeros</td></tr> <tr><td> 0x503000000160 </td><td> 0x503000000190 </td></tr></table>>;];
+	{
+		rank = 4;
+		node503000000130;
+	}
+		node503000000160;
+	node503000000130->node503000000160[color = "orange"];
+	node503000000160 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000160 </td></tr> <tr><td width = "100" colspan = "2" > snake</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	{
+		rank = 5;
+		node503000000160;
+	}
+		node503000000190;
+	node503000000130->node503000000190[color = "orange"];
+	node503000000190 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000190 </td></tr> <tr><td width = "100" colspan = "2" > Poltarashka</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	{
+		rank = 5;
+		node503000000190;
+	}
+		node5030000001c0;
+	node5030000000a0->node5030000001c0[color = "orange"];
+	node5030000001c0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000001c0 </td></tr> <tr><td width = "100" colspan = "2" > Matan teaches</td></tr> <tr><td> 0x5030000001f0 </td><td> 0x5030000002b0 </td></tr></table>>;];
+	{
+		rank = 3;
+		node5030000001c0;
+	}
+		node5030000001f0;
+	node5030000001c0->node5030000001f0[color = "orange"];
+	node5030000001f0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000001f0 </td></tr> <tr><td width = "100" colspan = "2" > he is teached discretnai matematica</td></tr> <tr><td> 0x503000000220 </td><td> 0x503000000250 </td></tr></table>>;];
+	{
+		rank = 4;
+		node5030000001f0;
+	}
+		node503000000220;
+	node5030000001f0->node503000000220[color = "orange"];
+	node503000000220 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000220 </td></tr> <tr><td width = "100" colspan = "2" > Pletnev</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	{
+		rank = 5;
+		node503000000220;
+	}
+		node503000000250;
+	node5030000001f0->node503000000250[color = "orange"];
+	node503000000250 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000250 </td></tr> <tr><td width = "100" colspan = "2" > Baraban</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	{
+		rank = 5;
+		node503000000250;
+	}
+		node5030000002b0;
+	node5030000001c0->node5030000002b0[color = "orange"];
+	node5030000002b0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000002b0 </td></tr> <tr><td width = "100" colspan = "2" > works programmer</td></tr> <tr><td> 0x5030000002e0 </td><td> 0x503000000310 </td></tr></table>>;];
+	{
+		rank = 4;
+		node5030000002b0;
+	}
+		node5030000002e0;
+	node5030000002b0->node5030000002e0[color = "orange"];
+	node5030000002e0 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x5030000002e0 </td></tr> <tr><td width = "100" colspan = "2" > maks</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	{
+		rank = 5;
+		node5030000002e0;
+	}
+		node503000000310;
+	node5030000002b0->node503000000310[color = "orange"];
+	node503000000310 [shape="plain"; style ="filled"; fillcolor ="hotpink2"; label = <<table><tr><td colspan = "2" > 0x503000000310 </td></tr> <tr><td width = "100" colspan = "2" > Nikita</td></tr> <tr><td> NULL </td><td> NULL </td></tr></table>>;];
+	{
+		rank = 5;
+		node503000000310;
 	}
 }

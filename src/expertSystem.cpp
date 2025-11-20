@@ -132,6 +132,7 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
     }
 
     expertSystemErrors systemErr = CORRECT_WORK;
+    size_t countOfAnswers = 0;
 
     infoAboutGraphicAnimation pictureInfo = {
         "design/fileForOutput.txt",
@@ -145,6 +146,11 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
     do{
         cleanLine( *answer );
 
+        if( countOfAnswers == 2 ){
+            infoAboutGraphicAnimation videoInfo = { "design/fileForVideo.txt", NULL, 354, 84, 300, 256 };
+            startMovieSurvey( &videoInfo );
+        }
+
         //printPicture( &pictureInfo );
         colorPrintf( NOMODE, BLUE, treeValueFormat "?\n", (*nodePtr)->data );
         voiceTheLine( (*nodePtr)->data );
@@ -153,6 +159,8 @@ expertSystemErrors goToSheetOfTree( node_t** nodePtr, node_t** previousNodePtr, 
             cleanLine( *answer );
             systemErr = takeAnAnswer( answer, sizeOfAnswer );
         }
+
+        ++countOfAnswers;
 
         *previousNodePtr = *nodePtr;
         if( strcmp( *answer, "YES") == 0 ){
